@@ -1,11 +1,18 @@
 name: Optimus APK Build
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      - name: Get Date
+        run: echo "date=$(date +'%Y-%m-%d-%H;%M;%S')" >> $GITHUB_ENV
+
       - name: Build with Buildozer
-        uses: ArtemGr/buildozer-action@v1
+        uses: JuniorGarcias/buildozer-action@v1
         with:
+          buildozer_version: master
+          python_version: 3.11
           command: buildozer android debug
